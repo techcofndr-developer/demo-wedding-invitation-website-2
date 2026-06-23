@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.addEventListener('error', function(e) {
+            var div = document.createElement('div');
+            div.style.position = 'fixed';
+            div.style.top = '0';
+            div.style.left = '0';
+            div.style.width = '100%';
+            div.style.padding = '20px';
+            div.style.background = '#5E1725';
+            div.style.color = '#F8F4EF';
+            div.style.zIndex = '999999';
+            div.style.fontSize = '14px';
+            div.style.fontFamily = 'monospace';
+            div.style.boxSizing = 'border-box';
+            div.style.borderBottom = '3px solid #C8A97E';
+            div.innerText = 'Uncaught Runtime Error:\n' + e.message + '\nat ' + e.filename + ':' + e.lineno + ':' + e.colno;
+            document.body.appendChild(div);
+        });
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarav & Anaya — One Timeless Celebration</title>
+    <meta name="description" content="Welcome to the digital wedding invitation and cinematic story of Aarav & Anaya. Join us in Udaipur, India on 12 December 2026.">
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- 12. FIXED ELEMENTS & UTILITIES -->
+    
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress-container">
+        <div id="scroll-progress-bar"></div>
+    </div>
+    
+    <!-- Custom Luxury Cursor -->
+    <div id="custom-cursor">
+        <div id="cursor-dot"></div>
+        <div id="cursor-circle"></div>
+    </div>
+    
+    <!-- Ambient Music Control -->
+    <button id="music-toggle" class="magnetic" aria-label="Toggle ambient music">
+        <span class="music-icon-wrapper">
+            <i class="fa-solid fa-volume-xmark" id="mute-icon"></i>
+            <i class="fa-solid fa-volume-high" id="sound-icon" style="display: none;"></i>
+        </span>
+        <span class="music-text">SOUND OFF</span>
+    </button>
+    
+    <!-- Global Canvas Layer for Volumetric Fog, Floating Petals, and Dust -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- 1. CINEMATIC PRELOADER -->
+    <div id="preloader">
+        <div class="preloader-overlay"></div>
+        <div class="preloader-content">
+            <div class="preloader-monogram-container">
+                <svg class="preloader-monogram" viewBox="0 0 100 100">
+                    <text x="50%" y="55%" text-anchor="middle" class="monogram-text">AA</text>
+                </svg>
+            </div>
+            
+            <h1 class="preloader-title font-serif">An Eternal Celebration Begins</h1>
+            
+            <div class="preloader-progress-wrapper">
+                <div class="preloader-progress-bar"></div>
+                <span class="preloader-percent">00%</span>
+            </div>
+            
+            <p class="preloader-tagline font-sans">Aarav & Anaya • December 12, 2026</p>
+            
+            <!-- Entry Portal Button (appears when loaded) -->
+            <button id="enter-experience-btn" class="magnetic" style="display: none;">
+                <span class="btn-border"></span>
+                <span class="btn-text font-serif">Enter with Sound</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN SCROLL CONTAINER -->
+    <main id="smooth-scroll-wrapper">
+
+        <!-- 2. FULLSCREEN HERO EXPERIENCE -->
+        <section id="hero" class="fullscreen-section">
+            <div class="hero-bg-container">
+                <img src="assets/hero_palace.png" alt="Udaipur Palace Lake View" class="hero-bg-image">
+                <div class="hero-overlay"></div>
+            </div>
+            
+            <div class="hero-content">
+                <div class="hero-header">
+                    <span class="hero-pretitle font-sans">YOU ARE INVITATED TO CELEBRATE THE UNION OF</span>
+                    <h2 class="hero-couple-names font-serif">
+                        <span class="name-split first-name">Aarav</span>
+                        <span class="name-ampersand">&</span>
+                        <span class="name-split second-name">Anaya</span>
+                    </h2>
+                </div>
+                
+                <div class="hero-details font-serif">
+                    <span class="hero-date">12 December 2026</span>
+                    <span class="hero-divider"></span>
+                    <span class="hero-location">Udaipur, India</span>
+                </div>
+                
+                <p class="hero-tagline font-sans">Two souls. One timeless celebration.</p>
+                
+                <div class="hero-ctas">
+                    <a href="#story" class="hero-btn btn-primary magnetic"><span class="btn-fill"></span><span class="btn-text-content">Begin Our Story</span></a>
+                    <a href="#rsvp" class="hero-btn btn-secondary magnetic"><span class="btn-fill"></span><span class="btn-text-content">RSVP</span></a>
+                </div>
+            </div>
+            
+            <div class="scroll-cue">
+                <div class="scroll-cue-line"></div>
+                <span class="scroll-cue-text font-sans">SCROLL TO ASCEND</span>
+            </div>
+        </section>
+
+        <!-- 3. OPENING QUOTE -->
+        <section id="quote" class="fullscreen-section dark-section">
+            <div class="quote-container">
+                <blockquote class="cinematic-quote font-serif">
+                    <span class="quote-word">In</span>
+                    <span class="quote-word">every</span>
+                    <span class="quote-word">lifetime,</span>
+                    <span class="quote-word">we</span>
+                    <span class="quote-word">would</span>
+                    <span class="quote-word">still</span>
+                    <span class="quote-word">choose</span>
+                    <span class="quote-word">each</span>
+                    <span class="quote-word">other.</span>
+                </blockquote>
+                <cite class="quote-author font-sans">— Aarav & Anaya</cite>
+            </div>
+        </section>
+
+        <!-- 4. OUR STORY -->
+        <section id="story" class="content-section">
+            <div class="section-header">
+                <span class="section-subtitle font-sans">THE JOURNEY</span>
+                <h3 class="section-title font-serif">Our Love Story</h3>
+                <div class="section-header-line"></div>
+            </div>
+            
+            <div class="story-chapters-container">
+                <!-- Chapter 1 -->
+                <div class="story-chapter" id="chapter-meeting">
+                    <div class="story-layout flex-row">
+                        <div class="story-text-col">
+                            <span class="story-chapter-num font-serif">Chapter I</span>
+                            <h4 class="story-chapter-title font-serif">First Meeting</h4>
+                            <span class="story-date font-sans">October 14, 2021</span>
+                            <p class="story-desc font-sans">It started amidst the autumn breeze of London. In a crowded cafe near Kensington, a spilled espresso and a shared laughter rewrote our destinies. It was brief, but the universe had already made its decision.</p>
+                            <div class="handwritten-note font-serif">“A single smile was all it took.”</div>
+                        </div>
+                        <div class="story-img-col parallax-img-container">
+                            <div class="story-img-frame">
+                                <img src="assets/gallery_mehendi.png" alt="First Meeting Visual" class="story-image">
+                                <div class="image-reveal-mask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chapter 2 -->
+                <div class="story-chapter" id="chapter-conversation">
+                    <div class="story-layout flex-row-reverse">
+                        <div class="story-text-col">
+                            <span class="story-chapter-num font-serif">Chapter II</span>
+                            <h4 class="story-chapter-title font-serif">First Conversation</h4>
+                            <span class="story-date font-sans">November 3, 2021</span>
+                            <p class="story-desc font-sans">Our first real conversation lasted six hours and three cups of tea. We talked of galaxies, old books, childhood secrets, and everything in between. By midnight, we realized we weren't just talking; we were remembering each other.</p>
+                            <div class="handwritten-note font-serif">“We spoke as if we had known each other for centuries.”</div>
+                        </div>
+                        <div class="story-img-col parallax-img-container">
+                            <div class="story-img-frame">
+                                <img src="assets/gallery_bride.png" alt="First Conversation Visual" class="story-image">
+                                <div class="image-reveal-mask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chapter 3 -->
+                <div class="story-chapter" id="chapter-proposal">
+                    <div class="story-layout flex-row">
+                        <div class="story-text-col">
+                            <span class="story-chapter-num font-serif">Chapter III</span>
+                            <h4 class="story-chapter-title font-serif">The Proposal</h4>
+                            <span class="story-date font-sans">February 14, 2025</span>
+                            <p class="story-desc font-sans">Under the starry skies of Lake Como, on a wooden boat gently rocking in the cold breeze, Aarav asked the question that would seal our forevers. With tears in our eyes and the moon as our witness, Anaya said yes.</p>
+                            <div class="handwritten-note font-serif">“Under the witness of the stars, forever began.”</div>
+                        </div>
+                        <div class="story-img-col parallax-img-container">
+                            <div class="story-img-frame">
+                                <img src="assets/couple_portrait.png" alt="The Proposal Visual" class="story-image">
+                                <div class="image-reveal-mask"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. INTERACTIVE SURPRISE EXPERIENCE -->
+        <section id="surprise" class="content-section dark-section">
+            <div class="surprise-container">
+                <div class="section-header white-header">
+                    <span class="section-subtitle font-sans">A GIFT FOR YOU</span>
+                    <h3 class="section-title font-serif">A Little Surprise Awaits</h3>
+                    <p class="section-desc font-sans">Every celebration deserves a little surprise. Use your cursor or touch to scratch off the gold foil card below and reveal a hidden memory from us to you.</p>
+                </div>
+                
+                <div class="scratch-card-wrapper">
+                    <!-- Revealed Secret Content underneath -->
+                    <div class="scratch-card-reveal" id="scratch-reveal-content">
+                        <div class="reveal-bg" style="background-image: url('assets/couple_portrait.png');"></div>
+                        <div class="reveal-overlay"></div>
+                        <div class="reveal-inner-content">
+                            <h4 class="reveal-title font-serif">You Unlocked a Memory!</h4>
+                            <p class="reveal-message font-serif" id="reveal-message-text">"We are so excited to celebrate with you. Your presence is our greatest blessing."</p>
+                            <div class="reveal-ctas">
+                                <a href="https://open.spotify.com" target="_blank" class="reveal-btn btn-spotify magnetic"><i class="fa-brands fa-spotify"></i> Couple Playlist</a>
+                                <button id="send-wishes-btn" class="reveal-btn btn-wishes magnetic"><i class="fa-solid fa-heart"></i> Send Wishes</button>
+                                <button id="calendar-btn" class="reveal-btn btn-calendar magnetic"><i class="fa-solid fa-calendar-days"></i> Add to Calendar</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scratch Canvas Overlay -->
+                    <canvas id="scratch-canvas" width="450" height="550"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. LOVE TIMELINE -->
+        <section id="timeline" class="horizontal-scroll-container">
+            <div class="horizontal-scroll-track" id="timeline-track">
+                <!-- Main Pinned Header -->
+                <div class="timeline-slide timeline-intro-slide">
+                    <div class="timeline-intro-content">
+                        <span class="section-subtitle font-sans">MILESTONES</span>
+                        <h2 class="timeline-intro-title font-serif">Our Love<br>Timeline</h2>
+                        <p class="font-sans">Scroll horizontally to walk through our milestones.</p>
+                        <div class="horizontal-indicator">
+                            <span class="horiz-arrow">&rarr;</span>
+                            <span class="horiz-text font-sans">SCROLL</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Milestone 1 -->
+                <div class="timeline-slide">
+                    <div class="timeline-card">
+                        <span class="timeline-year font-serif">2021</span>
+                        <div class="timeline-card-image" style="background-image: url('assets/gallery_mehendi.png');"></div>
+                        <h4 class="timeline-card-title font-serif">First Meeting</h4>
+                        <p class="timeline-card-desc font-sans">A cozy coffee shop in London became the birthplace of a lifetime journey.</p>
+                    </div>
+                </div>
+
+                <!-- Milestone 2 -->
+                <div class="timeline-slide">
+                    <div class="timeline-card">
+                        <span class="timeline-year font-serif">2022</span>
+                        <div class="timeline-card-image" style="background-image: url('assets/gallery_bride.png');"></div>
+                        <h4 class="timeline-card-title font-serif">First Coffee Date</h4>
+                        <p class="timeline-card-desc font-sans">Our brief coffee date turned into a six-hour walk through the park under the rain.</p>
+                    </div>
+                </div>
+
+                <!-- Milestone 3 -->
+                <div class="timeline-slide">
+                    <div class="timeline-card">
+                        <span class="timeline-year font-serif">2023</span>
+                        <div class="timeline-card-image" style="background-image: url('assets/gallery_setup.png');"></div>
+                        <h4 class="timeline-card-title font-serif">First Trip Together</h4>
+                        <p class="timeline-card-desc font-sans">We visited Paris and explored old libraries, cementing our shared love of art.</p>
+                    </div>
+                </div>
+
+                <!-- Milestone 4 -->
+                <div class="timeline-slide">
+                    <div class="timeline-card">
+                        <span class="timeline-year font-serif">2025</span>
+                        <div class="timeline-card-image" style="background-image: url('assets/couple_portrait.png');"></div>
+                        <h4 class="timeline-card-title font-serif">The Proposal</h4>
+                        <p class="timeline-card-desc font-sans">Under the starry Como skies, we promised each other all of our lifetimes.</p>
+                    </div>
+                </div>
+
+                <!-- Milestone 5 -->
+                <div class="timeline-slide">
+                    <div class="timeline-card">
+                        <span class="timeline-year font-serif">2026</span>
+                        <div class="timeline-card-image" style="background-image: url('assets/hero_palace.png');"></div>
+                        <h4 class="timeline-card-title font-serif">The Royal Wedding</h4>
+                        <p class="timeline-card-desc font-sans">A celebration in Udaipur, surrounded by loved ones and eternal vows.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. IMMERSIVE GALLERY -->
+        <section id="gallery" class="content-section">
+            <div class="section-header">
+                <span class="section-subtitle font-sans">VISUAL JOURNAL</span>
+                <h3 class="section-title font-serif">Moments Captured</h3>
+                <div class="section-header-line"></div>
+            </div>
+            
+            <div class="gallery-grid">
+                <!-- Floating Photo 1 -->
+                <div class="gallery-item size-large parallax-gallery-item" data-speed="-0.5">
+                    <div class="gallery-item-inner">
+                        <img src="assets/gallery_bride.png" alt="Wedding Moment 1" class="gallery-img">
+                        <div class="gallery-caption font-serif">Anaya in Traditional Grandeur</div>
+                    </div>
+                </div>
+                
+                <!-- Floating Photo 2 -->
+                <div class="gallery-item size-medium parallax-gallery-item" data-speed="0.8">
+                    <div class="gallery-item-inner">
+                        <img src="assets/gallery_mehendi.png" alt="Wedding Moment 2" class="gallery-img">
+                        <div class="gallery-caption font-serif">Detailed Mehendi Art</div>
+                    </div>
+                </div>
+
+                <!-- Floating Photo 3 -->
+                <div class="gallery-item size-small parallax-gallery-item" data-speed="-0.3">
+                    <div class="gallery-item-inner">
+                        <img src="assets/couple_portrait.png" alt="Wedding Moment 3" class="gallery-img">
+                        <div class="gallery-caption font-serif">Togetherness</div>
+                    </div>
+                </div>
+
+                <!-- Floating Photo 4 -->
+                <div class="gallery-item size-medium parallax-gallery-item" data-speed="0.5">
+                    <div class="gallery-item-inner">
+                        <img src="assets/gallery_setup.png" alt="Wedding Moment 4" class="gallery-img">
+                        <div class="gallery-caption font-serif">Lakeside Terrace Ambient Setup</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. WEDDING CELEBRATIONS -->
+        <section id="events" class="content-section champagne-section">
+            <div class="section-header">
+                <span class="section-subtitle font-sans">SCHEDULE</span>
+                <h3 class="section-title font-serif">The Celebrations</h3>
+                <div class="section-header-line"></div>
+            </div>
+            
+            <div class="events-timeline">
+                <div class="timeline-vertical-line">
+                    <div class="timeline-draw-fill"></div>
+                </div>
+                
+                <!-- Event 1: Haldi -->
+                <div class="event-card-wrapper left-align">
+                    <div class="event-dot"></div>
+                    <div class="event-card">
+                        <div class="event-card-inner">
+                            <span class="event-tag font-sans">DAY 01</span>
+                            <h4 class="event-name font-serif">Haldi Ceremony</h4>
+                            <div class="event-meta font-sans">
+                                <p><i class="fa-regular fa-calendar"></i> Dec 10, 2026 | <i class="fa-regular fa-clock"></i> 10:00 AM</p>
+                                <p><i class="fa-solid fa-location-dot"></i> The Poolside Terrace, Leela Palace</p>
+                                <p><i class="fa-solid fa-shirt"></i> <strong>Dress Code:</strong> Festive Yellow / Ochre Shimmer</p>
+                            </div>
+                            <p class="event-desc font-sans">A vibrant morning of turmeric blessings, laughter, and traditional wedding beats.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 2: Mehendi -->
+                <div class="event-card-wrapper right-align">
+                    <div class="event-dot"></div>
+                    <div class="event-card">
+                        <div class="event-card-inner">
+                            <span class="event-tag font-sans">DAY 01</span>
+                            <h4 class="event-name font-serif">Mehendi & Sangeet</h4>
+                            <div class="event-meta font-sans">
+                                <p><i class="fa-regular fa-calendar"></i> Dec 10, 2026 | <i class="fa-regular fa-clock"></i> 06:00 PM</p>
+                                <p><i class="fa-solid fa-location-dot"></i> Inner Mewar Court, Leela Palace</p>
+                                <p><i class="fa-solid fa-shirt"></i> <strong>Dress Code:</strong> Traditional Indian / Emerald Green</p>
+                            </div>
+                            <p class="event-desc font-sans">Intricate henna designs, traditional dances, and musical celebration under a canopy of stars.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 3: Wedding Ceremony -->
+                <div class="event-card-wrapper left-align">
+                    <div class="event-dot"></div>
+                    <div class="event-card">
+                        <div class="event-card-inner">
+                            <span class="event-tag font-sans">DAY 02</span>
+                            <h4 class="event-name font-serif">The Royal Vows</h4>
+                            <div class="event-meta font-sans">
+                                <p><i class="fa-regular fa-calendar"></i> Dec 11, 2026 | <i class="fa-regular fa-clock"></i> 04:00 PM</p>
+                                <p><i class="fa-solid fa-location-dot"></i> Lakeview Mandap, Leela Palace</p>
+                                <p><i class="fa-solid fa-shirt"></i> <strong>Dress Code:</strong> Royal Formals / Pastel Colors</p>
+                            </div>
+                            <p class="event-desc font-sans">A sacred traditional ceremony as the sun sets over Lake Pichola, uniting Aarav & Anaya forever.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 4: Grand Reception -->
+                <div class="event-card-wrapper right-align">
+                    <div class="event-dot"></div>
+                    <div class="event-card">
+                        <div class="event-card-inner">
+                            <span class="event-tag font-sans">DAY 02</span>
+                            <h4 class="event-name font-serif">Grand Reception</h4>
+                            <div class="event-meta font-sans">
+                                <p><i class="fa-regular fa-calendar"></i> Dec 11, 2026 | <i class="fa-regular fa-clock"></i> 08:00 PM</p>
+                                <p><i class="fa-solid fa-location-dot"></i> The Grand Ballroom, Leela Palace</p>
+                                <p><i class="fa-solid fa-shirt"></i> <strong>Dress Code:</strong> Black Tie / Tuxedos & Gowns</p>
+                            </div>
+                            <p class="event-desc font-sans">An evening of fine dining, luxury champagne toasts, and a night of dancing to celebrate our union.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. VENUE EXPERIENCE -->
+        <section id="venue" class="content-section">
+            <div class="venue-container">
+                <div class="venue-visuals-col">
+                    <div class="venue-main-image-frame parallax-img-container">
+                        <img src="assets/hero_palace.png" alt="Leela Palace Udaipur View" class="venue-img">
+                        <div class="image-reveal-mask"></div>
+                    </div>
+                </div>
+                <div class="venue-info-col">
+                    <span class="section-subtitle font-sans">THE LOCATION</span>
+                    <h3 class="venue-title font-serif">The Leela Palace</h3>
+                    <span class="venue-subtitle font-sans">Udaipur, Rajasthan, India</span>
+                    <div class="venue-divider"></div>
+                    <p class="venue-desc font-sans">Poised on the tranquil waters of Lake Pichola, The Leela Palace Udaipur stands as a breathtaking tribute to Mewar's royal heritage. Majestic architecture, lush manicured gardens, and spectacular lake views provide a majestic backdrop for our celebrations.</p>
+                    
+                    <div class="accommodation-details">
+                        <h5 class="details-heading font-serif">ACCOMMODATION & ARRIVALS</h5>
+                        <p class="font-sans">Rooms have been arranged for guests at The Leela Palace from Dec 10 to Dec 12. Airport transfers from Maharana Pratap Airport (UDR) will be coordinated. Please share your flight details during RSVP.</p>
+                    </div>
+                    
+                    <div class="venue-ctas">
+                        <a href="https://maps.app.goo.gl/KaDcFar6cT2fsm8f7" target="_blank" class="venue-btn btn-primary magnetic"><span class="btn-fill"></span><span class="btn-text-content">View Directions <i class="fa-solid fa-arrow-right"></i></span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. LIVE COUNTDOWN -->
+        <section id="countdown" class="content-section dark-section">
+            <div class="countdown-celestial-canvas-container">
+                <canvas id="countdown-canvas"></canvas>
+            </div>
+            
+            <div class="countdown-content">
+                <span class="section-subtitle font-sans">THE JOURNEY TOWARDS FOREVER</span>
+                <h3 class="countdown-title font-serif">Counting the Seconds</h3>
+                
+                <div class="countdown-timer font-serif">
+                    <div class="timer-unit">
+                        <span class="timer-val" id="days">000</span>
+                        <span class="timer-label font-sans">DAYS</span>
+                    </div>
+                    <div class="timer-colon">:</div>
+                    <div class="timer-unit">
+                        <span class="timer-val" id="hours">00</span>
+                        <span class="timer-label font-sans">HOURS</span>
+                    </div>
+                    <div class="timer-colon">:</div>
+                    <div class="timer-unit">
+                        <span class="timer-val" id="minutes">00</span>
+                        <span class="timer-label font-sans">MINUTES</span>
+                    </div>
+                    <div class="timer-colon">:</div>
+                    <div class="timer-unit">
+                        <span class="timer-val" id="seconds">00</span>
+                        <span class="timer-label font-sans">SECONDS</span>
+                    </div>
+                </div>
+                
+                <p class="countdown-subtext font-sans">Until vows are exchanged in the City of Lakes.</p>
+            </div>
+        </section>
+
+        <!-- 11. PREMIUM RSVP EXPERIENCE -->
+        <section id="rsvp" class="content-section champagne-section">
+            <!-- Confetti / Gold dust explosion layer -->
+            <canvas id="rsvp-canvas"></canvas>
+            
+            <div class="rsvp-container">
+                <div class="rsvp-card">
+                    <div class="rsvp-card-border"></div>
+                    <div class="rsvp-card-inner">
+                        <div class="rsvp-header">
+                            <span class="rsvp-monogram font-serif">AA</span>
+                            <h3 class="rsvp-title font-serif">Kindly Respond</h3>
+                            <p class="rsvp-subtitle font-sans">Please RSVP by November 1, 2026 to help us plan this celebration.</p>
+                        </div>
+                        
+                        <!-- RSVP Form -->
+                        <form id="rsvp-form" onsubmit="event.preventDefault(); return false;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="guest-name" class="font-sans">Guest Name</label>
+                                    <input type="text" id="guest-name" name="guest_name" required placeholder="Your full name" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="guest-phone" class="font-sans">Phone Number</label>
+                                    <input type="tel" id="guest-phone" name="guest_phone" required placeholder="Include country code" class="form-input">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="guest-count" class="font-sans">Number of Guests</label>
+                                    <select id="guest-count" name="guest_count" class="form-input">
+                                        <option value="1">1 Person</option>
+                                        <option value="2" selected>2 People</option>
+                                        <option value="3">3 People</option>
+                                        <option value="4">4 People</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dietary" class="font-sans">Food Preference</label>
+                                    <select id="dietary" name="dietary" class="form-input">
+                                        <option value="veg" selected>Vegetarian Gourmet</option>
+                                        <option value="nonveg">Non-Vegetarian Gourmet</option>
+                                        <option value="vegan">Vegan</option>
+                                        <option value="special">Other / Dietary Restrictions</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="font-sans">Will you join our celebration?</label>
+                                <div class="attendance-radio-group">
+                                    <label class="radio-label font-sans">
+                                        <input type="radio" name="attendance" value="attending" checked class="radio-input">
+                                        <span class="custom-radio"></span>
+                                        Joyfully Accept
+                                    </label>
+                                    <label class="radio-label font-sans">
+                                        <input type="radio" name="attendance" value="declined" class="radio-input">
+                                        <span class="custom-radio"></span>
+                                        Regretfully Decline
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message" class="font-sans">Blessing or Message</label>
+                                <textarea id="message" name="message" rows="3" placeholder="Send a message to Aarav & Anaya..." class="form-input"></textarea>
+                            </div>
+                            
+                            <button type="submit" id="rsvp-submit-btn" class="rsvp-submit-btn magnetic">
+                                <span class="btn-fill"></span>
+                                <span class="btn-text-content">Submit RSVP</span>
+                            </button>
+                        </form>
+                        
+                        <!-- Confirmation message -->
+                        <div id="rsvp-success-message" style="display: none;">
+                            <div class="success-icon-wrapper">
+                                <svg class="success-checkmark" viewBox="0 0 52 52">
+                                    <circle class="success-checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                                    <path class="success-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                </svg>
+                            </div>
+                            <h4 class="success-title font-serif">Your response has been received</h4>
+                            <p class="success-desc font-serif">"Thank you for becoming part of our forever."</p>
+                            <p class="success-subdesc font-sans">A confirmation details has been noted. We look forward to welcoming you in Udaipur.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 12. EMOTIONAL CLOSING -->
+        <section id="closing" class="fullscreen-section dark-section">
+            <div class="closing-bg-container">
+                <img src="assets/gallery_setup.png" alt="Luxury Udaipur Palace Setup" class="closing-bg-image">
+                <div class="closing-overlay"></div>
+            </div>
+            
+            <div class="closing-content">
+                <span class="closing-pretitle font-sans">THE JOURNEY BEGINS</span>
+                <h2 class="closing-title font-serif">Thank you for celebrating love with us.</h2>
+                <p class="closing-subtitle font-serif">We cannot wait to create memories together.</p>
+                <div class="closing-monogram font-serif">AA</div>
+                
+                <div class="closing-ctas">
+                    <button id="save-date-btn" class="closing-btn btn-primary magnetic"><span class="btn-fill"></span><span class="btn-text-content">Save The Date</span></button>
+                </div>
+                
+                <footer class="closing-footer font-sans">
+                    <p>© Aarav & Anaya 2026. Made with eternal love.</p>
+                </footer>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Custom Application Logic -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>

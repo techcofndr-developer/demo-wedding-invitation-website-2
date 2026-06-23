@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aarav & Anaya — Wedding Registry Admin</title>
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Design Tokens matching the main wedding invitation */
+        :root {
+            --color-bg-dark: #111111;
+            --color-bg-panel: #1a1a1a;
+            --color-bg-light: #F8F4EF;
+            --color-accent-gold: #C8A97E;
+            --color-accent-burgundy: #5E1725;
+            --color-accent-emerald: #20352D;
+            --color-text-light: #F8F4EF;
+            --color-text-muted: #aaaaaa;
+            
+            --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+            --font-sans: 'Inter', 'Manrope', sans-serif;
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* CUSTOM CURSOR SYSTEM */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 99999;
+        }
+        #cursor-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: var(--color-accent-gold);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        #cursor-circle {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border: 1px solid rgba(200, 169, 126, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, border-color 0.3s;
+            pointer-events: none;
+        }
+        body:hover #custom-cursor {
+            opacity: 1;
+        }
+        @media (max-width: 1024px) {
+            #custom-cursor { display: none; }
+        }
+
+        /* 1. PASSCODE LOGIN SCREEN */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--color-bg-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: var(--transition-smooth);
+        }
+
+        .login-card {
+            background: rgba(26, 26, 26, 0.85);
+            border: 1px solid rgba(200, 169, 126, 0.2);
+            padding: 4rem 3rem;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .login-card-border {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 1px solid rgba(200, 169, 126, 0.1);
+            pointer-events: none;
+        }
+
+        .login-monogram {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            color: var(--color-accent-gold);
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .login-title {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .login-subtitle {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+        }
+
+        .login-form-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .login-form-group label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--color-accent-gold);
+            margin-bottom: 0.8rem;
+        }
+
+        .login-input {
+            width: 100%;
+            background: #111111;
+            border: 1px solid rgba(200, 169, 126, 0.2);
+            color: #FFFFFF;
+            padding: 1.1rem;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 0.3em;
+            outline: none;
+            transition: var(--transition-smooth);
+            cursor: none;
+        }
+
+        .login-input:focus {
+            border-color: var(--color-accent-gold);
+            box-shadow: 0 0 15px rgba(200, 169, 126, 0.1);
+        }
+
+        .login-btn {
+            background-color: var(--color-accent-burgundy);
+            color: white;
+            border: 1px solid var(--color-accent-burgundy);
+            padding: 1.1rem 0;
+            width: 100%;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: none;
+            transition: var(--transition-smooth);
+        }
+
+        .login-btn:hover {
+            border-color: var(--color-accent-gold);
+            background-color: var(--color-accent-gold);
+            color: var(--color-bg-dark);
+        }
+
+        .login-error {
+            color: #FF5A5F;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            letter-spacing: 0.05em;
+            display: none;
+        }
+
+        /* 2. MAIN DASHBOARD CONTENT */
+        #dashboard-view {
+            display: none;
+            padding: 3rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header.admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(200, 169, 126, 0.15);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .admin-header-title h1 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--color-accent-gold);
+        }
+
+        .admin-header-title p {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        .admin-header-ctas {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .admin-btn {
+            padding: 0.8rem 1.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: none;
+            border: 1px solid rgba(200, 169, 126, 0.3);
+            color: var(--color-text-light);
+            cursor: none;
+            transition: var(--transition-smooth);
+        }
+
+        .admin-btn:hover {
+            border-color: var(--color-accent-gold);
+            background-color: rgba(200, 169, 126, 0.08);
+        }
+
+        .admin-btn-primary {
+            background-color: var(--color-accent-gold);
+            color: var(--color-bg-dark);
+            border-color: var(--color-accent-gold);
+        }
+
+        .admin-btn-primary:hover {
+            background-color: transparent;
+            color: var(--color-accent-gold);
+        }
+
+        .admin-btn-danger {
+            border-color: rgba(255, 90, 95, 0.3);
+            color: #FF5A5F;
+        }
+
+        .admin-btn-danger:hover {
+            border-color: #FF5A5F;
+            background-color: rgba(255, 90, 95, 0.08);
+        }
+
+        /* 3. METRIC CARDS GRID */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: var(--color-bg-panel);
+            border: 1px solid rgba(200, 169, 126, 0.1);
+            padding: 2.5rem 2rem;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .metric-card-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-card-val {
+            font-family: var(--font-serif);
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--color-text-light);
+            line-height: 1;
+        }
+
+        .metric-card-detail {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--color-accent-gold);
+        }
+
+        /* 4. ANALYTICS GRAPHS PANEL */
+        .analytics-panel {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .analytics-card {
+            background: var(--color-bg-panel);
+            border: 1px solid rgba(200, 169, 126, 0.1);
+            padding: 2.5rem;
+        }
+
+        .analytics-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: var(--color-accent-gold);
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(200, 169, 126, 0.1);
+            padding-bottom: 0.8rem;
+        }
+
+        /* Food preferences styling */
+        .preference-row {
+            margin-bottom: 1.8rem;
+        }
+
+        .preference-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.05em;
+        }
+
+        .pref-name {
+            text-transform: uppercase;
+        }
+
+        .pref-val {
+            color: var(--color-accent-gold);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-accent-burgundy), var(--color-accent-gold));
+            width: 0%;
+            transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Message log lists */
+        .notes-list {
+            max-height: 250px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-right: 0.5rem;
+        }
+
+        /* Custom Scrollbar for list */
+        .notes-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .notes-list::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.02);
+        }
+        .notes-list::-webkit-scrollbar-thumb {
+            background: var(--color-accent-gold);
+            border-radius: 2px;
+        }
+
+        .note-item {
+            background-color: rgba(255,255,255,0.02);
+            border-left: 2px solid var(--color-accent-gold);
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .note-author {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--color-accent-gold);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* 5. GUEST REGISTRY TABLE PANEL */
+        .registry-panel {
+            background: var(--color-bg-panel);
+            border: 1px solid rgba(200, 169, 126, 0.1);
+            padding: 3rem 2.5rem;
+        }
+
+        .registry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .registry-header h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--color-accent-gold);
+        }
+
+        .search-box-wrapper {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-box-wrapper i {
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            transform: translateY(-50%);
+            color: var(--color-accent-gold);
+            font-size: 0.9rem;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--color-bg-dark);
+            border: 1px solid rgba(200, 169, 126, 0.2);
+            color: white;
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            font-size: 0.85rem;
+            outline: none;
+            cursor: none;
+            transition: var(--transition-smooth);
+        }
+
+        .search-input:focus {
+            border-color: var(--color-accent-gold);
+            box-shadow: 0 0 10px rgba(200,169,126,0.05);
+        }
+
+        /* Registry table */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .registry-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .registry-table th {
+            padding: 1.2rem 1rem;
+            border-bottom: 2px solid rgba(200, 169, 126, 0.2);
+            font-weight: 600;
+            color: var(--color-accent-gold);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .registry-table td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--color-text-light);
+            vertical-align: middle;
+        }
+
+        .registry-table tr:hover td {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-attending {
+            background-color: rgba(32, 53, 45, 0.3);
+            color: #4cd964;
+            border: 1px solid rgba(76, 217, 100, 0.2);
+        }
+
+        .status-declined {
+            background-color: rgba(94, 23, 37, 0.2);
+            color: #FF5A5F;
+            border: 1px solid rgba(255, 90, 95, 0.2);
+        }
+
+        .btn-delete-guest {
+            background: none;
+            border: none;
+            color: rgba(255,90,95,0.6);
+            cursor: none;
+            padding: 0.3rem;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-delete-guest:hover {
+            color: #FF5A5F;
+            transform: scale(1.15);
+        }
+
+        .empty-registry-state {
+            text-align: center;
+            padding: 5rem 0;
+            color: var(--color-text-muted);
+        }
+
+        .empty-registry-state i {
+            font-size: 3rem;
+            color: rgba(200, 169, 126, 0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .analytics-panel {
+                grid-template-columns: 1fr;
+            }
+            #dashboard-view {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div id="custom-cursor">
+        <div id="cursor-dot"></div>
+        <div id="cursor-circle"></div>
+    </div>
+
+    <!-- 1. PASSCODE LOGIN SCREEN -->
+    <section id="login-screen">
+        <div class="login-card">
+            <div class="login-card-border"></div>
+            <span class="login-monogram">AA</span>
+            <h2 class="login-title">Wedding Manager</h2>
+            <p class="login-subtitle">Dashboard Access Portal</p>
+            
+            <form id="login-form" onsubmit="event.preventDefault(); handleLogin();">
+                <div class="login-form-group">
+                    <label for="passcode">Access Passcode</label>
+                    <input type="password" id="passcode" required class="login-input" placeholder="••••••••" autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">Unlock Analytics</button>
+                <div id="login-error-msg" class="login-error">Passcode incorrect. Please try again.</div>
+            </form>
+        </div>
+    </section>
+
+    <!-- 2. MAIN ANALYTICS DASHBOARD VIEW -->
+    <main id="dashboard-view">
+        
+        <header class="admin-header">
+            <div class="admin-header-title">
+                <h1>Aarav & Anaya</h1>
+                <p>Wedding RSVP Registry & Analytics</p>
+            </div>
+            
+            <div class="admin-header-ctas">
+                <button class="admin-btn" onclick="generateMockRecords()"><i class="fa-solid fa-wand-magic-sparkles"></i> Load Mock Data</button>
+                <button class="admin-btn admin-btn-primary" onclick="exportToCSV()"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+                <button class="admin-btn admin-btn-danger" onclick="clearRegistry()"><i class="fa-solid fa-trash-can"></i> Clear All</button>
+            </div>
+        </header>
+
+        <!-- Metrics Overview Grid -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <h4 class="metric-card-title">Total RSVPs</h4>
+                <div class="metric-card-val" id="metric-total-rsvps">0</div>
+                <div class="metric-card-detail" id="metric-rsvp-detail">0 Joyfully Accepted</div>
+            </div>
+            
+            <div class="metric-card">
+                <h4 class="metric-card-title">Total Guests Attending</h4>
+                <div class="metric-card-val" id="metric-attending-count">0</div>
+                <div class="metric-card-detail">Expected at Leela Palace</div>
+            </div>
+
+            <div class="metric-card">
+                <h4 class="metric-card-title">Declined Invites</h4>
+                <div class="metric-card-val" id="metric-declined-count">0</div>
+                <div class="metric-card-detail" id="metric-declined-pct">0% Decline Rate</div>
+            </div>
+        </section>
+
+        <!-- Graphs & Lists Panel -->
+        <section class="analytics-panel">
+            
+            <!-- Food Preferences -->
+            <div class="analytics-card">
+                <h3>Food Preferences</h3>
+                <div id="food-stats-container">
+                    <div class="preference-row">
+                        <div class="preference-info">
+                            <span class="pref-name">Vegetarian Gourmet</span>
+                            <span class="pref-val" id="pref-veg-pct">0% (0)</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="bar-veg" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="preference-row">
+                        <div class="preference-info">
+                            <span class="pref-name">Non-Vegetarian Gourmet</span>
+                            <span class="pref-val" id="pref-nonveg-pct">0% (0)</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="bar-nonveg" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="preference-row">
+                        <div class="preference-info">
+                            <span class="pref-name">Vegan</span>
+                            <span class="pref-val" id="pref-vegan-pct">0% (0)</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="bar-vegan" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="preference-row">
+                        <div class="preference-info">
+                            <span class="pref-name">Other / Special</span>
+                            <span class="pref-val" id="pref-special-pct">0% (0)</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="bar-special" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes & Blessings -->
+            <div class="analytics-card">
+                <h3>Guest Blessings & Notes</h3>
+                <div class="notes-list" id="notes-log-list">
+                    <div class="note-item" style="text-align: center; color: var(--color-text-muted);">
+                        No blessings or messages logged yet.
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Detailed Registry Table -->
+        <section class="registry-panel">
+            <div class="registry-header">
+                <h3>Guest Registry</h3>
+                <div class="search-box-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="registry-search" class="search-input" placeholder="Search by name or phone..." oninput="filterRegistryTable()">
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="registry-table">
+                    <thead>
+                        <tr>
+                            <th>Guest Name</th>
+                            <th>Phone Number</th>
+                            <th>Guests Count</th>
+                            <th>Attendance</th>
+                            <th>Food Choice</th>
+                            <th>Special Note</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="registry-table-body">
+                        <!-- Guest Rows populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="empty-table-state" class="empty-registry-state" style="display: none;">
+                <i class="fa-solid fa-address-book"></i>
+                <p>No guests matching search queries found.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Custom Cursor Lerp
+        const cursor = {
+            dot: document.getElementById('cursor-dot'),
+            circle: document.getElementById('cursor-circle'),
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            targetX: window.innerWidth / 2,
+            targetY: window.innerHeight / 2
+        };
+
+        window.addEventListener('mousemove', (e) => {
+            cursor.targetX = e.clientX;
+            cursor.targetY = e.clientY;
+        });
+
+        function updateCursor() {
+            let nextDotX = cursor.dot.offsetLeft + (cursor.targetX - cursor.dot.offsetLeft) * 0.3;
+            let nextDotY = cursor.dot.offsetTop + (cursor.targetY - cursor.dot.offsetTop) * 0.3;
+            let nextCircleX = cursor.circle.offsetLeft + (cursor.targetX - cursor.circle.offsetLeft) * 0.08;
+            let nextCircleY = cursor.circle.offsetTop + (cursor.targetY - cursor.circle.offsetTop) * 0.08;
+
+            cursor.dot.style.left = `${nextDotX}px`;
+            cursor.dot.style.top = `${nextDotY}px`;
+            cursor.circle.style.left = `${nextCircleX}px`;
+            cursor.circle.style.top = `${nextCircleY}px`;
+
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+
+        // Attach hovers
+        function attachCursorHovers() {
+            const hoverables = document.querySelectorAll('button, input, select, textarea, a, th, td, .note-item');
+            hoverables.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.circle.style.width = '48px';
+                    cursor.circle.style.height = '48px';
+                    cursor.circle.style.backgroundColor = 'rgba(200, 169, 126, 0.08)';
+                    cursor.circle.style.borderColor = '#C8A97E';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.circle.style.width = '32px';
+                    cursor.circle.style.height = '32px';
+                    cursor.circle.style.backgroundColor = '';
+                    cursor.circle.style.borderColor = '';
+                });
+            });
+        }
+        attachCursorHovers();
+
+        // Passcode Lock logic
+        const correctPasscode = "Udaipur2026";
+        
+        function handleLogin() {
+            const codeInput = document.getElementById('passcode');
+            const errorMsg = document.getElementById('login-error-msg');
+            
+            if (codeInput.value === correctPasscode) {
+                // Unlock
+                document.getElementById('login-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('dashboard-view').style.display = 'block';
+                    loadRSVPDatabase();
+                    attachCursorHovers();
+                }, 500);
+            } else {
+                errorMsg.style.display = 'block';
+                codeInput.value = '';
+                codeInput.focus();
+            }
+        }
+
+        // Database Management (Sync with LocalStorage)
+        let guestData = [];
+
+        function loadRSVPDatabase() {
+            const localData = localStorage.getItem('wedding_rsvps');
+            if (localData) {
+                guestData = JSON.parse(localData);
+            } else {
+                guestData = [];
+            }
+            renderDashboard();
+        }
+
+        function saveRSVPDatabase() {
+            localStorage.setItem('wedding_rsvps', JSON.stringify(guestData));
+            renderDashboard();
+        }
+
+        // Render metrics and tables
+        function renderDashboard() {
+            // 1. Calculate Metrics
+            const totalRSVPs = guestData.length;
+            const attendingRecords = guestData.filter(g => g.attendance === 'attending');
+            const attendingCount = attendingRecords.reduce((sum, g) => sum + parseInt(g.guest_count || 1), 0);
+            const declinedCount = guestData.filter(g => g.attendance === 'declined').length;
+            
+            document.getElementById('metric-total-rsvps').textContent = totalRSVPs;
+            document.getElementById('metric-rsvp-detail').textContent = `${attendingRecords.length} Joyfully Accepted`;
+            document.getElementById('metric-attending-count').textContent = attendingCount;
+            document.getElementById('metric-declined-count').textContent = declinedCount;
+            
+            const declinePct = totalRSVPs > 0 ? Math.round((declinedCount / totalRSVPs) * 100) : 0;
+            document.getElementById('metric-declined-pct').textContent = `${declinePct}% Decline Rate`;
+
+            // 2. Calculate Food Preferences
+            const attendingGuestsTotal = attendingRecords.reduce((sum, g) => sum + parseInt(g.guest_count || 1), 0);
+            
+            let vegCount = 0;
+            let nonvegCount = 0;
+            let veganCount = 0;
+            let specialCount = 0;
+
+            attendingRecords.forEach(g => {
+                const count = parseInt(g.guest_count || 1);
+                if (g.dietary === 'veg') vegCount += count;
+                else if (g.dietary === 'nonveg') nonvegCount += count;
+                else if (g.dietary === 'vegan') veganCount += count;
+                else specialCount += count;
+            });
+
+            const vegPct = attendingGuestsTotal > 0 ? Math.round((vegCount / attendingGuestsTotal) * 100) : 0;
+            const nonvegPct = attendingGuestsTotal > 0 ? Math.round((nonvegCount / attendingGuestsTotal) * 100) : 0;
+            const veganPct = attendingGuestsTotal > 0 ? Math.round((veganCount / attendingGuestsTotal) * 100) : 0;
+            const specialPct = attendingGuestsTotal > 0 ? Math.round((specialCount / attendingGuestsTotal) * 100) : 0;
+
+            document.getElementById('pref-veg-pct').textContent = `${vegPct}% (${vegCount})`;
+            document.getElementById('bar-veg').style.width = `${vegPct}%`;
+            
+            document.getElementById('pref-nonveg-pct').textContent = `${nonvegPct}% (${nonvegCount})`;
+            document.getElementById('bar-nonveg').style.width = `${nonvegPct}%`;
+
+            document.getElementById('pref-vegan-pct').textContent = `${veganPct}% (${veganCount})`;
+            document.getElementById('bar-vegan').style.width = `${veganPct}%`;
+
+            document.getElementById('pref-special-pct').textContent = `${specialPct}% (${specialCount})`;
+            document.getElementById('bar-special').style.width = `${specialPct}%`;
+
+            // 3. Render Notes & Blessings log
+            const notesContainer = document.getElementById('notes-log-list');
+            const messages = guestData.filter(g => g.message && g.message.trim() !== '');
+            
+            if (messages.length === 0) {
+                notesContainer.innerHTML = `<div class="note-item" style="text-align: center; color: var(--color-text-muted);">No messages or blessings logged yet.</div>`;
+            } else {
+                notesContainer.innerHTML = '';
+                messages.reverse().forEach(g => {
+                    const noteItem = document.createElement('div');
+                    noteItem.className = 'note-item';
+                    noteItem.innerHTML = `
+                        "${g.message}"
+                        <span class="note-author">— ${g.guest_name} ${g.attendance === 'declined' ? '(Declined)' : `(${g.guest_count} attending)`}</span>
+                    `;
+                    notesContainer.appendChild(noteItem);
+                });
+            }
+
+            // 4. Render Table
+            renderTableRows(guestData);
+            attachCursorHovers();
+        }
+
+        // Render registry rows
+        function renderTableRows(data) {
+            const tableBody = document.getElementById('registry-table-body');
+            
+            if (data.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 4rem 0; color: var(--color-text-muted);">
+                            <i class="fa-solid fa-box-open" style="font-size: 2rem; display: block; margin-bottom: 1rem; opacity: 0.3;"></i>
+                            No RSVP responses found in the database.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = '';
+            data.forEach((guest, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 500;">${guest.guest_name}</td>
+                    <td style="font-family: monospace; letter-spacing: 0.05em;">${guest.guest_phone || 'N/A'}</td>
+                    <td>${guest.guest_count || '1'}</td>
+                    <td>
+                        <span class="status-badge ${guest.attendance === 'attending' ? 'status-attending' : 'status-declined'}">
+                            ${guest.attendance === 'attending' ? 'Accepted' : 'Declined'}
+                        </span>
+                    </td>
+                    <td style="text-transform: capitalize;">${getDietLabel(guest.dietary)}</td>
+                    <td style="font-style: italic; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${guest.message || ''}">
+                        ${guest.message || '—'}
+                    </td>
+                    <td>
+                        <button class="btn-delete-guest" onclick="deleteGuest(${index})" title="Remove guest record">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function getDietLabel(diet) {
+            if (diet === 'veg') return 'Vegetarian';
+            if (diet === 'nonveg') return 'Non-Vegetarian';
+            if (diet === 'vegan') return 'Vegan';
+            if (diet === 'special') return 'Other/Dietary';
+            return '—';
+        }
+
+        // Delete guest record
+        function deleteGuest(idx) {
+            if (confirm("Are you sure you want to remove this guest's RSVP response?")) {
+                guestData.splice(idx, 1);
+                saveRSVPDatabase();
+            }
+        }
+
+        // Clear all entries
+        function clearRegistry() {
+            if (confirm("🚨 WARNING: Are you sure you want to delete ALL RSVP responses? This action is permanent!")) {
+                guestData = [];
+                saveRSVPDatabase();
+            }
+        }
+
+        // Search Filter
+        function filterRegistryTable() {
+            const query = document.getElementById('registry-search').value.toLowerCase().trim();
+            
+            if (query === '') {
+                renderTableRows(guestData);
+                document.getElementById('empty-table-state').style.display = 'none';
+                return;
+            }
+
+            const filtered = guestData.filter(g => 
+                (g.guest_name && g.guest_name.toLowerCase().includes(query)) ||
+                (g.guest_phone && g.guest_phone.includes(query)) ||
+                (g.message && g.message.toLowerCase().includes(query))
+            );
+
+            renderTableRows(filtered);
+
+            if (filtered.length === 0) {
+                document.getElementById('empty-table-state').style.display = 'block';
+            } else {
+                document.getElementById('empty-table-state').style.display = 'none';
+            }
+        }
+
+        // Export data to CSV
+        function exportToCSV() {
+            if (guestData.length === 0) {
+                alert("No guest records to export.");
+                return;
+            }
+
+            // Headers
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Guest Name,Phone Number,Guests Count,Attendance Status,Food Choice,Blessing/Message\n";
+
+            // Rows
+            guestData.forEach(g => {
+                const name = `"${g.guest_name.replace(/"/g, '""')}"`;
+                const phone = `"${g.guest_phone}"`;
+                const count = g.guest_count;
+                const status = g.attendance === 'attending' ? 'Attending' : 'Declined';
+                const food = getDietLabel(g.dietary);
+                const msg = `"${(g.message || '').replace(/"/g, '""')}"`;
+                
+                csvContent += `${name},${phone},${count},${status},${food},${msg}\n`;
+            });
+
+            // Create download link
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Aarav_Anaya_Wedding_RSVPs.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Generate Mock Records for visualization
+        function generateMockRecords() {
+            const mockGuests = [
+                { guest_name: "Vikram Singhania", guest_phone: "+91 98765 43210", guest_count: "2", attendance: "attending", dietary: "veg", message: "So happy for you both! Can't wait to dance at Udaipur." },
+                { guest_name: "Dr. Meghna Vyas", guest_phone: "+91 99887 76655", guest_count: "3", attendance: "attending", dietary: "veg", message: "Hearty congratulations! Udaipur palace will be stunning." },
+                { guest_name: "Siddharth & Priya Sen", guest_phone: "+44 7700 900077", guest_count: "2", attendance: "attending", dietary: "nonveg", message: "Congratulations Aarav & Anaya! Booked our flights." },
+                { guest_name: "Rahul Mehta", guest_phone: "+91 98223 34455", guest_count: "1", attendance: "declined", dietary: "veg", message: "Sorry I will miss the union! Wishing you a lifetime of love." },
+                { guest_name: "Ayesha Kapoor", guest_phone: "+91 91234 56789", guest_count: "4", attendance: "attending", dietary: "vegan", message: "Excited for the Haldi morning! Sending heaps of blessings." },
+                { guest_name: "Karan Oberoi", guest_phone: "+91 98989 89898", guest_count: "1", attendance: "attending", dietary: "special", message: "Alergic to nuts. Looking forward to the Mehendi party!" },
+                { guest_name: "Nandini Sen", guest_phone: "+91 98112 23344", guest_count: "2", attendance: "attending", dietary: "nonveg", message: "Counting down the days. See you soon!" }
+            ];
+
+            guestData = [...guestData, ...mockGuests];
+            saveRSVPDatabase();
+            alert("Mock guest registry entries loaded successfully!");
+        }
+    </script>
+</body>
+</html>
