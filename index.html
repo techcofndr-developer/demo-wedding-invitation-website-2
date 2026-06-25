@@ -63,8 +63,8 @@
     <!-- Global Canvas Layer for Volumetric Fog, Floating Petals, and Dust -->
     <canvas id="ambient-canvas"></canvas>
 
-    <!-- 1. CINEMATIC PRELOADER -->
-    <div id="preloader">
+    <!-- 1. CINEMATIC INTRO GATE -->
+    <div id="preloader" class="intro-gate">
         <div class="preloader-overlay"></div>
         <div class="preloader-content">
             <div class="preloader-monogram-container">
@@ -73,20 +73,14 @@
                 </svg>
             </div>
             
-            <h1 class="preloader-title font-serif">An Eternal Celebration Begins</h1>
+            <h1 class="preloader-title font-serif">Aarav &amp; Anaya</h1>
+            <p class="preloader-tagline font-sans">One Timeless Celebration</p>
             
             <div class="preloader-progress-wrapper">
                 <div class="preloader-progress-bar"></div>
                 <span class="preloader-percent">00%</span>
+                <span class="tap-to-open font-sans" style="display: none;">TAP TO OPEN</span>
             </div>
-            
-            <p class="preloader-tagline font-sans">Aarav & Anaya • December 12, 2026</p>
-            
-            <!-- Entry Portal Button (appears when loaded) -->
-            <button id="enter-experience-btn" class="magnetic" style="display: none;">
-                <span class="btn-border"></span>
-                <span class="btn-text font-serif">Enter with Sound</span>
-            </button>
         </div>
     </div>
 

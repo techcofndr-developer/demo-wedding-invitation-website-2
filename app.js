@@ -457,7 +457,6 @@ const initWeddingApp = () => {
     const preloader = document.getElementById('preloader');
     const progressBar = preloader.querySelector('.preloader-progress-bar');
     const progressPercent = preloader.querySelector('.preloader-percent');
-    const enterBtn = document.getElementById('enter-experience-btn');
     const preloaderProgressWrapper = preloader.querySelector('.preloader-progress-wrapper');
 
     let loadedCount = 0;
@@ -504,19 +503,39 @@ const initWeddingApp = () => {
     function triggerPreloaderComplete() {
         clearTimeout(fallbackTimeout);
         
-        // Hide loading progress bar and reveal Enter button
-        gsap.to(preloaderProgressWrapper, { opacity: 0, y: -10, duration: 0.5, onComplete: () => {
-            preloaderProgressWrapper.style.display = 'none';
-            enterBtn.style.display = 'inline-block';
-            enterBtn.classList.add('visible');
-        }});
+        const progressBar = preloader.querySelector('.preloader-progress-bar');
+        const progressPercent = preloader.querySelector('.preloader-percent');
+        const tapToOpenText = preloader.querySelector('.tap-to-open');
+        
+        // Fade out progress details and reveal TAP TO OPEN
+        gsap.to([progressBar, progressPercent], { 
+            opacity: 0, 
+            duration: 0.4, 
+            onComplete: () => {
+                if (progressBar) progressBar.style.display = 'none';
+                if (progressPercent) progressPercent.style.display = 'none';
+                
+                if (tapToOpenText) {
+                    tapToOpenText.style.display = 'inline-block';
+                    gsap.fromTo(tapToOpenText, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' });
+                }
+                preloader.classList.add('loaded');
+            }
+        });
     }
 
-    // Handle Preloader Exit
-    enterBtn.addEventListener('click', () => {
-        // Unlock scroll
-        lenis.start();
+    // Handle Preloader Exit (Tap Anywhere on Screen once loaded)
+    preloader.addEventListener('click', () => {
+        if (!preloader.classList.contains('loaded')) return;
         
+        // Prevent double taps
+        preloader.classList.remove('loaded');
+        preloader.style.pointerEvents = 'none';
+        
+        // Hide tap indicator instantly
+        const tapToOpenText = preloader.querySelector('.tap-to-open');
+        if (tapToOpenText) gsap.to(tapToOpenText, { opacity: 0, duration: 0.2 });
+
         // Start Sound Engine
         soundEngine.startAmbientMusic();
         muteIcon.style.display = 'none';
@@ -524,18 +543,35 @@ const initWeddingApp = () => {
         musicText.textContent = 'SOUND ON';
         soundEngine.playSuccessChime();
 
-        // GSAP Preloader Out timeline
+        // GSAP Preloader Zoom & Out timeline
         const exitTl = gsap.timeline({
             onComplete: () => {
                 preloader.style.display = 'none';
-                // Trigger Hero animations
-                playHeroEntrance();
+                // Unlock scroll ONLY after the entire intro completes!
+                lenis.start();
             }
         });
 
-        exitTl.to(enterBtn, { scale: 0.9, opacity: 0, duration: 0.4 })
-              .to(preloader.querySelector('.preloader-content'), { y: -50, opacity: 0, duration: 0.8, ease: 'power2.inOut' }, '-=0.2')
-              .to(preloader, { y: '-100%', duration: 1.2, ease: 'power4.inOut' }, '-=0.4');
+        // Cinematic zoom scale-up and fade reveal
+        exitTl.to('.preloader-progress-wrapper', { opacity: 0, duration: 0.4 })
+              .to('.preloader-monogram-container', { 
+                  scale: 8, 
+                  opacity: 0, 
+                  duration: 1.6, 
+                  ease: 'power3.inOut' 
+              }, 0)
+              .to('.preloader-title, .preloader-tagline', { 
+                  scale: 1.4, 
+                  opacity: 0, 
+                  duration: 1.4, 
+                  ease: 'power3.inOut' 
+              }, 0.1)
+              .to(preloader, { 
+                  opacity: 0, 
+                  duration: 1.4, 
+                  ease: 'power2.inOut' 
+              }, 0.2)
+              .call(playHeroEntrance, null, 0.4); // Stagger main content reveal
     });
 
 

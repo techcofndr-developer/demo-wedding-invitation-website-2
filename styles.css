@@ -357,57 +357,45 @@ img {
 }
 
 .preloader-tagline {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--color-text-light-muted);
-    letter-spacing: 0.25em;
-    margin-top: 1.5rem;
+    letter-spacing: 0.3em;
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem;
     opacity: 0;
-    animation: fadeIn 1s ease 1.8s forwards;
-}
-
-/* Enter Button Styles */
-#enter-experience-btn {
-    position: relative;
-    padding: 1.2rem 3rem;
-    background: none;
-    border: none;
-    outline: none;
-    color: var(--color-accent-gold);
-    cursor: none;
-    overflow: hidden;
-    margin-top: 1.5rem;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: var(--transition-smooth);
-}
-
-#enter-experience-btn.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.btn-border {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid rgba(200, 169, 126, 0.4);
-    transition: var(--transition-smooth);
-}
-
-#enter-experience-btn:hover .btn-border {
-    border-color: var(--color-accent-gold);
-    transform: scale(1.05);
-}
-
-.btn-text {
-    position: relative;
-    font-size: 0.9rem;
-    letter-spacing: 0.15em;
     text-transform: uppercase;
-    font-weight: 500;
+    animation: fadeIn 1s ease 1.6s forwards;
 }
+
+/* Tap to Open Interaction indicator */
+.tap-to-open {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    color: var(--color-accent-gold);
+    text-shadow: 0 0 8px rgba(200, 169, 126, 0.3);
+    animation: pulse-tap 2.2s infinite ease-in-out;
+    text-transform: uppercase;
+}
+
+@keyframes pulse-tap {
+    0%, 100% {
+        opacity: 0.55;
+        transform: scale(0.97);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.03);
+    }
+}
+
+.intro-gate {
+    cursor: pointer;
+}
+
+
 
 /* Animations */
 @keyframes fadeInUp {
