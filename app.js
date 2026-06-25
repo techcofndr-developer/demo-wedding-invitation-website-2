@@ -552,23 +552,16 @@ const initWeddingApp = () => {
             }
         });
 
-        // Cinematic zoom scale-up and fade reveal
-        exitTl.to('.preloader-progress-wrapper', { opacity: 0, duration: 0.4 })
-              .to('.preloader-monogram-container', { 
-                  scale: 8, 
+        // Cinematic zoom scale-down and fade reveal of opening elements
+        exitTl.to('.preloader-content', { 
+                  scale: 0.9, 
                   opacity: 0, 
                   duration: 1.6, 
                   ease: 'power3.inOut' 
               }, 0)
-              .to('.preloader-title, .preloader-tagline', { 
-                  scale: 1.4, 
-                  opacity: 0, 
-                  duration: 1.4, 
-                  ease: 'power3.inOut' 
-              }, 0.1)
               .to(preloader, { 
                   opacity: 0, 
-                  duration: 1.4, 
+                  duration: 1.6, 
                   ease: 'power2.inOut' 
               }, 0.2)
               .call(playHeroEntrance, null, 0.4); // Stagger main content reveal
@@ -585,8 +578,11 @@ const initWeddingApp = () => {
             }
         });
         
-        // Gentle scale down zoom of background
-        gsap.to('.hero-bg-image', { scale: 1, duration: 6, ease: 'power2.out' });
+        // Gentle scale down zoom of background (cinematic pull-back)
+        gsap.fromTo('.hero-bg-image', 
+            { scale: 1.2 }, 
+            { scale: 1, duration: 5.5, ease: 'power2.out' }
+        );
 
         heroTl.to('.hero-pretitle', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
               .to('.first-name', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '-=0.8')
@@ -594,7 +590,8 @@ const initWeddingApp = () => {
               .to('.name-ampersand', { opacity: 1, scale: 1, duration: 1.5, ease: 'elastic.out(1, 0.5)' }, '-=0.9')
               .to('.hero-details', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=1')
               .to('.hero-tagline', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.8')
-              .to('.hero-ctas', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.8');
+              .to('.hero-ctas', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.8')
+              .to('.scroll-cue', { opacity: 0.8, y: 0, duration: 1.5, ease: 'power2.out' }, '-=0.6');
     }
 
     function initHeroScroll() {
