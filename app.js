@@ -24,6 +24,32 @@ const initWeddingApp = () => {
         hovered: false
     };
 
+    // Custom Luxury Modal Dialog
+    const modalOverlay = document.getElementById('custom-modal');
+    const modalMessage = document.getElementById('custom-modal-message');
+    const modalCloseBtn = document.getElementById('custom-modal-close');
+
+    function showCustomAlert(message) {
+        if (!modalOverlay || !modalMessage) return;
+        modalMessage.innerHTML = message;
+        modalOverlay.classList.add('active');
+        lenis.stop(); // Lock scroll while alert is open
+    }
+
+    function hideCustomAlert() {
+        if (!modalOverlay) return;
+        modalOverlay.classList.remove('active');
+        // Only unlock if preloader is gone
+        const preloader = document.getElementById('preloader');
+        if (!preloader || preloader.style.display === 'none') {
+            lenis.start();
+        }
+    }
+
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', hideCustomAlert);
+    }
+
     // Track mouse position
     window.addEventListener('mousemove', (e) => {
         cursor.targetX = e.clientX;
@@ -951,13 +977,13 @@ const initWeddingApp = () => {
     document.getElementById('send-wishes-btn').addEventListener('click', () => {
         soundEngine.playTone(523.25, 'sine', 0.4, 0.08); // Chord note
         soundEngine.playTone(659.25, 'sine', 0.4, 0.08, 0.1);
-        alert('Thank you! You can share your blessing message in the RSVP form below.');
+        showCustomAlert('Thank you! You can share your blessing message in the RSVP form below.');
         lenis.scrollTo('#rsvp', { duration: 1.5 });
     });
 
     document.getElementById('calendar-btn').addEventListener('click', () => {
         soundEngine.playTone(523.25, 'sine', 0.4, 0.08);
-        alert('Date saved: Aarav & Anaya Wedding, December 11-12, 2026, Leela Palace Udaipur.');
+        showCustomAlert('Date saved: Aarav & Anaya Wedding, December 11-12, 2026, Leela Palace Udaipur.');
     });
 
 
@@ -1402,7 +1428,7 @@ const initWeddingApp = () => {
         soundEngine.playTone(659.25, 'sine', 0.6, 0.1);
         soundEngine.playTone(783.99, 'sine', 0.6, 0.1, 0.15);
         soundEngine.playTone(1046.50, 'sine', 0.8, 0.12, 0.3);
-        alert('Vows Scheduled: December 11-12, 2026. See you in Udaipur, India!');
+        showCustomAlert('Vows Scheduled: December 11-12, 2026. See you in Udaipur, India!');
     });
 
     // ==========================================================================

@@ -2205,3 +2205,96 @@ textarea.form-input {
         text-align: center;
     }
 }
+
+/* ==========================================================================
+   CUSTOM LUXURY MODAL DIALOG
+   ========================================================================== */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease, background-color 0.5s ease;
+}
+
+.custom-modal-overlay.active {
+    pointer-events: auto;
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.custom-modal-box {
+    position: relative;
+    background-color: var(--color-bg-light); /* Ivory */
+    padding: 3.5rem 2.5rem;
+    max-width: 450px;
+    width: 90%;
+    border: 1px solid var(--color-accent-gold);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    border-radius: 4px;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.custom-modal-overlay.active .custom-modal-box {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.custom-modal-border {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px dashed rgba(200, 169, 126, 0.5);
+    pointer-events: none;
+}
+
+.custom-modal-monogram {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    color: var(--color-accent-gold);
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+#custom-modal-message {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--color-accent-burgundy);
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.custom-modal-btn {
+    padding: 0.8rem 2.5rem;
+    background-color: var(--color-accent-burgundy);
+    color: var(--color-text-light);
+    border: 1px solid var(--color-accent-burgundy);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.custom-modal-btn:hover {
+    background-color: var(--color-accent-gold);
+    border-color: var(--color-accent-gold);
+    color: var(--color-text-dark);
+}
