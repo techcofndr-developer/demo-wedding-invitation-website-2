@@ -833,6 +833,21 @@
 
     </main>
 
+    <!-- Custom Admin Modal Dialog -->
+    <div id="custom-modal" class="custom-modal-overlay">
+        <div class="custom-modal-box">
+            <div class="custom-modal-border"></div>
+            <div class="custom-modal-content">
+                <span class="custom-modal-icon"><i class="fa-solid fa-bell"></i></span>
+                <p id="custom-modal-message" class="font-serif"></p>
+                <div class="custom-modal-actions">
+                    <button id="custom-modal-cancel" class="custom-modal-btn btn-cancel font-sans">Cancel</button>
+                    <button id="custom-modal-confirm" class="custom-modal-btn btn-confirm font-sans" style="display: none;">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Custom Cursor Lerp
         const cursor = {
@@ -1103,7 +1118,7 @@
 
         // Clear all entries
         function clearRegistry() {
-            showModalDialog("🚨 <strong>WARNING:</strong> Are you sure you want to delete ALL RSVP responses? This action is permanent!", true, "Delete All", "Cancel")
+            showModalDialog("<strong>WARNING:</strong> Are you sure you want to delete ALL RSVP responses? This action is permanent!", true, "Delete All", "Cancel")
                 .then(confirmed => {
                     if (confirmed) {
                         guestData = [];
@@ -1188,20 +1203,5 @@
             showModalDialog("Mock guest registry entries loaded successfully!", false, "", "OK");
         }
     </script>
-
-    <!-- Custom Admin Modal Dialog -->
-    <div id="custom-modal" class="custom-modal-overlay">
-        <div class="custom-modal-box">
-            <div class="custom-modal-border"></div>
-            <div class="custom-modal-content">
-                <span class="custom-modal-icon"><i class="fa-solid fa-bell"></i></span>
-                <p id="custom-modal-message" class="font-serif"></p>
-                <div class="custom-modal-actions">
-                    <button id="custom-modal-cancel" class="custom-modal-btn btn-cancel font-sans">Cancel</button>
-                    <button id="custom-modal-confirm" class="custom-modal-btn btn-confirm font-sans" style="display: none;">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
