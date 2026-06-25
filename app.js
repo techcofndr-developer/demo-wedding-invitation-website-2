@@ -562,7 +562,17 @@ const initWeddingApp = () => {
     }
 
     function initHeroScroll() {
-        // Scroll parallax/zooms for Hero Elements
+        // Pin background container to stay fixed in space
+        ScrollTrigger.create({
+            trigger: '#hero',
+            start: 'top top',
+            end: 'bottom top',
+            pin: '.hero-bg-container',
+            pinSpacing: false,
+            scrub: true
+        });
+
+        // Scroll animations for Hero Text Elements
         const heroScrollTl = gsap.timeline({
             scrollTrigger: {
                 trigger: '#hero',
@@ -572,7 +582,8 @@ const initWeddingApp = () => {
             }
         });
 
-        heroScrollTl.to('.hero-bg-image', { y: '25%', scale: 1.08, ease: 'none' })
+        // Fade out background container on scroll
+        heroScrollTl.to('.hero-bg-container', { opacity: 0, ease: 'none' }, 0)
                     .to('.first-name', { x: '-60px', y: '-40px', opacity: 0, ease: 'none' }, 0)
                     .to('.second-name', { x: '60px', y: '40px', opacity: 0, ease: 'none' }, 0)
                     .to('.name-ampersand', { scale: 0.4, opacity: 0, ease: 'none' }, 0)
